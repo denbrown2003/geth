@@ -2372,5 +2372,11 @@ func (bc *BlockChain) InsertHeaderChain(chain []*types.Header, checkFreq int) (i
 	}
 	defer bc.chainmu.Unlock()
 	_, err := bc.hc.InsertHeaderChain(chain, start, bc.forker)
+
+	if err == nil {
+		lastHeader := chain[len(chain)-1]
+		block := bc.GetBlockByNumber(lastHeader.Number.Uint64())
+		fmt.Println(block)
+	}
 	return 0, err
 }
